@@ -45,4 +45,4 @@ def login (request) :
 def admin (request) : 
     pass 
 def create_store (request) : 
-    pass 
+    pass
