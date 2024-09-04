@@ -1,18 +1,29 @@
-from itertools import product
-from pyexpat import model
-from random import choices
-from re import L
 from django.db import models
-from django.forms import IntegerField
-
-from store.views import category
+from store.views import category 
+from django.contrib.auth.models import User 
+from django.db.models.signals import post_save 
+from django.dispatch import receiver
+from .models import Profile
 # Create your models here.
 class User (models.Model) :
     UserID = models.IntegerField(primary_key= True) 
     UserName = models.CharField(max_length=50) 
     password = models.CharField(max_length=50)
     Email = models.EmailField()
-    role = models.CharField(max_length=50) 
+    role = models.CharField(max_length=50)
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    location = models.CharField(max_length=30, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
+    def __str__(self):
+        return self.user.UserName
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
 class Complaint(models.Model) :
     ComplaintId = models.IntegerField(primary_key= True)
     ComplaintDate= models.DateTimeField()
@@ -65,3 +76,4 @@ class Favorite(models.Model) :
     FavoriteID =models.IntegerField(primary_key=True) 
     UserID = models.ForeignKey(User,on_delete= models.CASCADE )
     ProductID = models.ForeignKey(Product,on_delete= models.CASCADE)
+    
