@@ -10,7 +10,6 @@ def home(request) :
         'categories': categories
     }
     return render(request, 'Home/Category.html', context)
-
 def category (request) : 
     from store.models import Store
     stores = Store.objects.filter(Category=category)
