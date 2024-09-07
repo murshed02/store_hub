@@ -56,7 +56,7 @@ def signup(request):
             user = form.save()
             messages.success(request, "Signup successful!")
 
-            return redirect('login')  # Redirect to login page after signup
+            return redirect('login')  
     else:
         form = Signup()
     return render(request, 'signup.html', {'form': form})
