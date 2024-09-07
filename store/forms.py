@@ -1,3 +1,4 @@
+from dataclasses import fields
 from multiprocessing import AuthenticationError
 from django import forms
 from .models import User, Order  ,Complaint ,Rating ,Store 
@@ -32,4 +33,9 @@ class Login(forms.Form):
 class Signup(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'password']
+        fields = ['username', 'email', 'password'] 
+class Registration_request(forms.ModelForm) : 
+    class Meta : 
+        model = Store 
+        fields= ['StoreName' , 'OwnerName', 'Email'  ,'PassWord' 
+                 ,'Verifications' ,'logo' ,'Category']

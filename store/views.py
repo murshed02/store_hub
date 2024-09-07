@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse 
 from django.contrib import messages
 from .models import OrderItem ,Product ,User 
-from .forms import User ,Login , Signup
+from .forms import User ,Login , Signup , Registration_request
 def home(request) : 
     from store.models import Store
     categories = Store.objects.values_list('Category', flat=True).distinct()
@@ -22,9 +22,10 @@ def cart (request) :
     cart = OrderItem.objects.all() 
     return render (request,'Home/Cart',cart) 
 def admin (request) : 
-    pass 
+    Registration_request = Registration_request.objects.all() 
+    return render (request , "/admin",Registration_request)    
 def Store_admin (request) : 
-    pass 
+    pass
 def create_store (request) :
     from store.models import Store 
     store = Store.objects.all()
