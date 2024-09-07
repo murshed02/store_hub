@@ -5,10 +5,12 @@ from django.dispatch import receiver
 # Create your models here.
 class User (models.Model) :
     UserID = models.IntegerField(primary_key= True) 
-    UserName = models.CharField(max_length=50) 
+    UserName = models.CharField(max_length=50 , unique=True) 
     password = models.CharField(max_length=50)
-    Email = models.EmailField()
+    Email = models.EmailField(unique=True)
     role = models.CharField(max_length=50)
+    def  __str__(self) : 
+        return self.UserName 
 class Complaint(models.Model) :
     ComplaintId = models.IntegerField(primary_key= True)
     ComplaintDate= models.DateTimeField()
